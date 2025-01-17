@@ -1,10 +1,8 @@
 package dev.nawid.SpringRunnerz.run;
 
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,9 +12,9 @@ import java.util.Optional;
 public class RunController {
 
 
-    private final RunRepository runRepository;
+    private final RunRepositoryH2 runRepository;
 
-    public RunController(RunRepository runRepository) {
+    public RunController(RunRepositoryH2 runRepository) {
         this.runRepository = runRepository;
     }
 
@@ -29,6 +27,7 @@ public class RunController {
     List<Run> findAll(){
         return runRepository.findAll();
     }
+
 
     @GetMapping("/{id}")
     Run findById(@PathVariable Integer id){
