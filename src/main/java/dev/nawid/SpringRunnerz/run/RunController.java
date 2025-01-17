@@ -12,9 +12,9 @@ import java.util.Optional;
 public class RunController {
 
 
-    private final RunRepositoryH2 runRepository;
+    private final RunRepository runRepository;
 
-    public RunController(RunRepositoryH2 runRepository) {
+    public RunController(RunRepository runRepository) {
         this.runRepository = runRepository;
     }
 
@@ -42,14 +42,14 @@ public class RunController {
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
     void create(@Valid @RequestBody Run run){
-        runRepository.create(run);
+        runRepository.save(run);
     }
 
     //put
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping("/{id}")
     void update(@RequestBody Run run, @PathVariable Integer id){
-        runRepository.update(run, id);
+        runRepository.save(run);
     }
 
 
@@ -57,7 +57,12 @@ public class RunController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
     void delete(@PathVariable Integer id){
-        runRepository.delete(id);
+        runRepository.delete(runRepository.findById(id).get());
+    }
+
+    @GetMapping("/location/{location}")
+    List<Run> findByLocation(@PathVariable String location) {
+        return runRepository.findAllByLocation(location);
     }
 
 }
